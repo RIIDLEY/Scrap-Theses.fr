@@ -42,7 +42,7 @@ def scrap_links(url):#Collecte le lien de toutes les theses
 
             soup = BeautifulSoup(reponse.text, "html.parser")
 
-            div = soup.find_all("div", {"class": "encart arrondi-10"})#Selectionne la div où il y'a les informations
+            div = soup.find_all("div", {"class": "encart arrondi-10"})#Selectionne la div où il y'a les informations de la thèse
 
             for info in div:
                 a = info.find("a")
@@ -68,7 +68,7 @@ def get_meta_in_link(links):#Collecte les métadonnées de toute les thèses cou
         writer.writeheader()#Ecrit les colonnes dans le fichier CSV
 
         for link in links:
-            reponse = requests.get(link.strip())#Recupere le html de la page
+            reponse = requests.get(link.strip())#Recupere l'html de la page
             if reponse.ok:
                 soup = BeautifulSoup(reponse.text, "html.parser")
                 keyword_to_CSV = ""
