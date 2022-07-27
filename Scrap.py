@@ -12,20 +12,20 @@ url_navig_debut = url + "&fq=dateSoutenance:[1965-01-01T23:59:59Z%2BTO%2B2022-12
 url_navig_end = "&sort=none&status=&access=&prevision=&filtrepersonne=&zone1=titreRAs&val1=&op1=AND&zone2=auteurs&val2=&op2=AND&zone3=etabSoutenances&val3=&op3=AND&zone4=dateSoutenance&val4a=&val4b=&type="
 
 
-def init():#Création du lien dynamique en fonction de la recherche courante
+def init():#Création d'un lien dynamique en fonction de la recherche courante
     sys.argv.pop(0)
     if(len(sys.argv)==0):
         print("Il manque les mots clés pour effectuer la recherche.")
     else:    
         scrap_links(url+"+".join(sys.argv))
 
-def scrap_links(url):#Collecte le lien de toute les theses
+def scrap_links(url):#Collecte le lien de toutes les theses
 
     links = []
-    reponse = requests.get(url)#Recupere la premier page
+    reponse = requests.get(url)#Recupere la première page
     soup = BeautifulSoup(reponse.text, "html.parser")
 
-    try:#Verifie s'il y'a un resultat à la recherche demandé
+    try:#Verifie s'il y a un résultat à la recherche demandée
         nbthese = int(soup.find("span", {"id": "sNbRes"}).text)
     except:
         print("Aucun document ne correspond à la recherche")
@@ -33,10 +33,10 @@ def scrap_links(url):#Collecte le lien de toute les theses
 
     print("Il y'a " + str(nbthese) + " thèses.\nCollecte en cours.")
 
-    for i in range(0, nbthese, 10):  # Navige entre les pages
+    for i in range(0, nbthese, 10):  #Navige entre les pages
 
         url_page = url_navig_debut + str(i) + url_navig_end #Création du lien de la page a traiter
-        reponse = requests.get(url_page)#Recupere le html de la page
+        reponse = requests.get(url_page)#Recupere l'html de la page
 
         if reponse.ok:#Si la collecte a fonctionné
 
